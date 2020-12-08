@@ -1,1 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
+html,
+body {
+  padding: 0;
+  margin: 0 auto;
+}
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: rgba(44, 62, 80, 1);
+}
+
+/* BASIC COLORS -> "c-tone" */
+/* shades of BLUE */
+.c-lightest {
+  color: rgba(213, 255, 254, 1);
+}
+.c-light {
+  color: rgba(183, 244, 243, 1);
+}
+.c-normal {
+  color: rgba(130, 195, 197, 1);
+}
+.c-font {
+  color: rgba(44, 62, 80, 1);
+}
+/* RED */
+.c-accent {
+  color: rgba(178, 28, 28, 1);
+}
+/* WHITE */
+.c-background {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* <a> TAGS */
+a,
+a:visited {
+  color: rgba(44, 62, 80, 1);
+  border: none;
+  outline: none;
+}
+a:hover,
+a:active {
+  font-weight: bold;
+}
+a:focus {
+  color: rgba(178, 28, 28, 1);
+}
