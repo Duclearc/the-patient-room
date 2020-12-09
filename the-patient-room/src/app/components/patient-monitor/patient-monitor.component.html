@@ -1,3 +1,12 @@
-<div id="patient-monitor">
-  <p>patient-monitor works!</p>
+<div class="card" id="patient-monitor">
+  <div class="card" [class]="patient.in_session ? 'c-accent':'c-normal'" *ngFor="let patient of patients">
+    <p>NAME: {{patient.id}} {{ patient.firstname }} {{ patient.lastname }}</p>
+    <!-- <p>WAITING-TIME: {{ patient.last_visit }}</p> -->
+    <button *ngIf="staff" class="c-accent" (click)="callPatient(patient.id)">
+      Call 🛎
+    </button>
+    <button *ngIf="staff" class="c-accent" (click)="endSession(patient.id)">
+      End Call 🛎
+    </button>
+  </div>
 </div>

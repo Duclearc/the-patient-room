@@ -5,11 +5,11 @@ import { RoomStaffComponent } from './components/room-staff/room-staff.component
 
 const routes: Routes = [
   {
-    path: 'room/patient',
+    path: 'patient-room',
     component: RoomPatientComponent,
   },
   {
-    path: 'room/staff',
+    path: 'staff-room',
     component: RoomStaffComponent,
   },
 ];
