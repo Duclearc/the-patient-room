@@ -1,0 +1,22 @@
+<div class="form">
+  <form #msgPatient (submit)="onSubmit(msgPatient)">
+    <div class="control">
+      <h3>Message to: {{patientName}}</h3>
+      <label for="message">Message</label>
+      <br />
+      <input
+        name="message"
+        type="text"
+        ngModel
+        #message="ngModel"
+        [class]="message.invalid && message.touched ? 'c-accent' : ''"
+        placeholder="Your message here"
+        required
+      />
+      <p [style.opacity]="message.invalid && message.touched ? 1 : 0" class="c-accent">
+        Please add your given name
+      </p>
+    </div>
+    <button type="submit">💬🤧 SEND</button>
+  </form>
+</div>

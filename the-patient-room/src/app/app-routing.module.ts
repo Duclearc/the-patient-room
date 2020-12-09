@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddPatientFormComponent } from './components/add-patient-form/add-patient-form.component';
+import { PatientMessageFormComponent } from './components/patient-message-form/patient-message-form.component';
 import { RoomComponent } from './components/room/room.component';
 
 const routes: Routes = [
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'add-patient',
         component: AddPatientFormComponent,
+      },
+      {
+        path: 'message-patient',
+        component: PatientMessageFormComponent,
       },
     ]
   },

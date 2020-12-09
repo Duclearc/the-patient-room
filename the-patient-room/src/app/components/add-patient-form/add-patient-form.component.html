@@ -1,6 +1,8 @@
-<div class="form card">
+<div class="form">
   <form [formGroup]="addPatient" (ngSubmit)="onSubmit()">
     <div class="control">
+      <label for="firstname">First Name</label>
+      <br />
       <input
         name="firstname"
         type="text"
@@ -14,6 +16,8 @@
       </p>
     </div>
     <div class="control">
+      <label for="lastname">Last Name</label>
+      <br />
       <input
         name="lastname"
         type="text"

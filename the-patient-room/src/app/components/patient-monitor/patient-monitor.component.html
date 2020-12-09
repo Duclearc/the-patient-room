@@ -1,12 +1,22 @@
 <div class="card" id="patient-monitor">
-  <div class="card" [class]="patient.in_session ? 'c-accent':'c-normal'" *ngFor="let patient of patients">
+  <div
+    class="card"
+    [class]="patient.in_session ? 'c-accent' : 'c-normal'"
+    *ngFor="let patient of patients"
+  >
     <p>NAME: {{ patient.firstname }} {{ patient.lastname }}</p>
     <!-- <p>WAITING-TIME: {{ patient.last_visit }}</p> -->
-    <button *ngIf="staff" class="c-accent" (click)="callPatient(patient.id)">
-      CALL 🔔
-    </button>
-    <button *ngIf="staff" class="c-accent" (click)="endSession(patient.id)">
-      REMOVE 🔕
-    </button>
+    <p class="c-accent">{{patient.messsage ? '💬: '+ patient.messsage:''}}</p>
+    <div *ngIf="staff">
+      <button class="c-accent" (click)="callPatient(patient.id)">
+        CALL 🔔
+      </button>
+      <button class="c-accent" (click)="endSession(patient.id)">
+        REMOVE 🔕
+      </button>
+      <a routerLink="./message-patient">
+        <button class="c-accent">💬🤧 MESSAGE PATIENT</button>
+      </a>
+    </div>
   </div>
 </div>

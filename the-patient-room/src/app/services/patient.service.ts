@@ -47,4 +47,7 @@ export class PatientService {
     this.patients.push(newPatient)
     this.updatedPatients.next([...this.patients]);
   }
+  loadMessageForm(patientID){
+    return
+  }
 }

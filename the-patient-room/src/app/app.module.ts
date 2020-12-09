@@ -7,7 +7,8 @@ import { PatientMonitorComponent } from './components/patient-monitor/patient-mo
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RoomComponent } from './components/room/room.component';
 import { AddPatientFormComponent } from './components/add-patient-form/add-patient-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PatientMessageFormComponent } from './components/patient-message-form/patient-message-form.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     PatientMonitorComponent,
     NavbarComponent,
     RoomComponent,
-    AddPatientFormComponent
+    AddPatientFormComponent,
+    PatientMessageFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
