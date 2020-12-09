@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Patient } from './../../../models/patient.model';
-import { ActivatedRoute } from '@angular/router';
 import { PatientService } from './../../services/patient.service';
 
 @Component({
@@ -9,24 +8,15 @@ import { PatientService } from './../../services/patient.service';
   styleUrls: ['./patient-monitor.component.css']
 })
 export class PatientMonitorComponent implements OnInit {
-  patients: Patient[];
-  staff = false;
+  @Input() patients: Patient[];
+  @Input() staff:boolean;
   called: number;
 
   constructor(
-    private route: ActivatedRoute,
     private patientService: PatientService,
   ) { }
 
   ngOnInit(): void {
-    this.route.url.subscribe(path => {
-      if (path[0].toString().includes('staff')) {
-        this.staff = true;
-      }
-    });
-    this.patients = [
-      ...this.patientService.getPatients()
-    ];
   }
 
   callPatient(patientID: number | string): void {
