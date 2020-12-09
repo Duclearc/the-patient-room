@@ -3,10 +3,10 @@
     <p>NAME: {{patient.id}} {{ patient.firstname }} {{ patient.lastname }}</p>
     <!-- <p>WAITING-TIME: {{ patient.last_visit }}</p> -->
     <button *ngIf="staff" class="c-accent" (click)="callPatient(patient.id)">
-      Call 🛎
+      CALL 🔔
     </button>
     <button *ngIf="staff" class="c-accent" (click)="endSession(patient.id)">
-      End Call 🛎
+      END 🔕
     </button>
   </div>
 </div>

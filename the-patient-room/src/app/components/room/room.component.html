@@ -1,7 +1,19 @@
 <div id="room">
-  <div class="card" [class]="staff ? 'c-banner':'c-light'">
-    <h1> Greetings </h1>
-    <h3> Welcome to the {{ room }} Room</h3>
+  <div class="card" [class]="staff ? 'c-banner' : 'c-light'">
+    <h1>Greetings</h1>
+    <h3>Welcome to the {{ room }} Room</h3>
   </div>
-  <app-patient-monitor [patients]="patients" [staff]="staff"></app-patient-monitor>
+  <div *ngIf="staff">
+    <a routerLink="./add-patient">
+      <button>➕🤧 NEW PATIENT</button>
+    </a>
+    <a routerLink="./">
+      <button>BACK</button>
+    </a>
+    <router-outlet></router-outlet>
+  </div>
+  <app-patient-monitor
+    [patients]="patients"
+    [staff]="staff"
+  ></app-patient-monitor>
 </div>

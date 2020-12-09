@@ -1,0 +1,31 @@
+<div class="form card">
+  <form [formGroup]="addPatient" (ngSubmit)="onSubmit()">
+    <div class="control">
+      <input
+        name="firstname"
+        type="text"
+        formControlName="firstname"
+        [class]="validity('firstname') ? 'c-accent' : ''"
+        placeholder="Max"
+        required
+      />
+      <p [style.opacity]="validity('firstname') ? 1:0" class="c-accent">
+        Please add your given name
+      </p>
+    </div>
+    <div class="control">
+      <input
+        name="lastname"
+        type="text"
+        formControlName="lastname"
+        [class]="validity('lastname') ? 'c-accent' : ''"
+        placeholder="Mustermann"
+        required
+      />
+      <p [style.opacity]="validity('lastname')? 1:0" class="c-accent">
+        Please add your family name
+      </p>
+    </div>
+    <button type="submit" [disabled]="addPatient.invalid">ADD PATIENT</button>
+  </form>
+</div>

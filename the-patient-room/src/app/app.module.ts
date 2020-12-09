@@ -6,17 +6,21 @@ import { AppComponent } from './app.component';
 import { PatientMonitorComponent } from './components/patient-monitor/patient-monitor.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RoomComponent } from './components/room/room.component';
+import { AddPatientFormComponent } from './components/add-patient-form/add-patient-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientMonitorComponent,
     NavbarComponent,
-    RoomComponent
+    RoomComponent,
+    AddPatientFormComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

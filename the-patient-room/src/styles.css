@@ -72,3 +72,14 @@ a:focus {
   max-width: 80%;
   padding: 0.2rem;
 }
+button {
+  border-radius: 10px;
+  border: 1px solid;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  margin: 0.5rem 1rem;
+}
+button:active {
+  box-shadow: inset 1px 0px 5px rgba(44, 62, 80, 1);
+}

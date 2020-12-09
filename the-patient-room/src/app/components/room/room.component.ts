@@ -14,7 +14,7 @@ export class RoomComponent implements OnInit {
   patientSubs: Subscription;
   patients: Patient[];
   staff = false;
-  room = this.staff ? 'Staff' : 'Patient';
+  room = 'Patient';
   called: number;
 
   constructor(
@@ -26,6 +26,7 @@ export class RoomComponent implements OnInit {
     this.route.url.subscribe(path => {
       if (path[0].toString().includes('staff')) {
         this.staff = true;
+        this.room = 'Staff';
       }
     });
     this.patientSubs = this.patientService.getPatientsListener()
