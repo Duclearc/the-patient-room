@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Patient } from './../../../models/patient.model';
 import { ActivatedRoute } from '@angular/router';
 import { PatientService } from './../../services/patient.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-room',
@@ -10,6 +11,7 @@ import { PatientService } from './../../services/patient.service';
 })
 export class RoomComponent implements OnInit {
 
+  patientSubs: Subscription;
   patients: Patient[];
   staff = false;
   room = this.staff ? 'Staff' : 'Patient';
@@ -26,9 +28,8 @@ export class RoomComponent implements OnInit {
         this.staff = true;
       }
     });
-    this.patients = [
-      ...this.patientService.getPatients()
-    ];
+    this.patientSubs = this.patientService.getPatientsListener()
+      .subscribe(patients => this.patients = patients);
   }
 
 }

@@ -4,6 +4,11 @@ import { RoomComponent } from './components/room/room.component';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'patient-room',
+    pathMatch: 'full',
+  },
+  {
     path: 'patient-room',
     component: RoomComponent,
   },
