@@ -9,6 +9,7 @@ export interface Patient {
   created?: string;
   last_visit: string;
   in_session: boolean;
+  messsage?: string;
 }
 
 export type PatientData = Omit<Patient, 'id' | 'created'>;

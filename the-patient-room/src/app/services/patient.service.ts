@@ -10,8 +10,8 @@ export class PatientService {
   // patients: Patient[];
   patients: Patient[] = [
     { ...dummy.default.patient },
-    { ...dummy.default.patient, id: 2 },
-    { ...dummy.default.patient, id: 3 },
+    { ...dummy.default.patient, id: 2, firstname: 'jack' },
+    { ...dummy.default.patient, id: 3, firstname: 'patricia' },
   ];
   private updatedPatients = new BehaviorSubject<Patient[]>([...this.patients]);
 
