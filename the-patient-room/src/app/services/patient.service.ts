@@ -60,5 +60,10 @@ export class PatientService {
   sendMsg2Patient(msg) {
     this.patients.find(p => p.id == this.msgPatient.id).messsage = msg;
     this.updatedPatients.next([...this.patients]);
+    this.msgPatient = undefined;
+  }
+  send2AllPatients(msg) {
+    this.patients.forEach(p => p.messsage = msg);
+    this.updatedPatients.next([...this.patients]);
   }
 }

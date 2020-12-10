@@ -7,3 +7,8 @@ button {
   min-height: 2rem;
   font-size: 1rem;
 }
+.patient-message {
+  padding: 1rem;
+  border-top: 1px solid ;
+  border-bottom: 1px solid ;
+}

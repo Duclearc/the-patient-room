@@ -11,7 +11,7 @@
         placeholder="Max"
         required
       />
-      <p [style.opacity]="validity('firstname') ? 1:0" class="c-accent">
+      <p [class]="validity('firstname') ? 'c-accent':'disappear'">
         Please add your given name
       </p>
     </div>
@@ -26,7 +26,7 @@
         placeholder="Mustermann"
         required
       />
-      <p [style.opacity]="validity('lastname')? 1:0" class="c-accent">
+      <p [class]="validity('lastname') ? 'c-accent':'disappear'">
         Please add your family name
       </p>
     </div>

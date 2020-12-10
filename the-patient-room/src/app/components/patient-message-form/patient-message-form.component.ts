@@ -13,7 +13,7 @@ import { Patient } from 'src/models/patient.model';
 export class PatientMessageFormComponent implements OnInit {
   msgPatient: Patient;
   msgPatientSubs: Subscription;
-  patientName = 'Patient';
+  patientName = 'All Patients';
   msgPatientForm = this.fb.group({
     message: ['', [Validators.required]]
   })
@@ -37,8 +37,11 @@ export class PatientMessageFormComponent implements OnInit {
 
   onSubmit() {
     if (this.msgPatientForm.invalid) { return; }
-    this.patientService.sendMsg2Patient(this.msgPatientForm.value.message);
-
+    if (this.msgPatient) {
+      this.patientService.sendMsg2Patient(this.msgPatientForm.value.message);
+    } else {
+      this.patientService.send2AllPatients(this.msgPatientForm.value.message);
+    }
     this.router.navigate(['staff-room']);
   }
 }

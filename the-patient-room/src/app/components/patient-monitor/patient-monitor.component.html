@@ -6,7 +6,7 @@
   >
     <p>NAME: {{ patient.firstname }} {{ patient.lastname }}</p>
     <!-- <p>WAITING-TIME: {{ patient.last_visit }}</p> -->
-    <p class="c-accent">{{patient.messsage ? '💬: '+ patient.messsage:''}}</p>
+    <p class="patient-message" [class]="patient.messsage ? 'c-accent':'disappear'">{{patient.messsage ? '💬: '+ patient.messsage:''}}</p>
     <div *ngIf="staff">
       <button class="c-accent" (click)="callPatient(patient.id)">
         CALL 🔔

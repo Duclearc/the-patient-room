@@ -1,19 +1,29 @@
 <div class="form">
   <form [formGroup]="msgPatientForm" (submit)="onSubmit()">
     <div class="control">
-      <h3>Message to: {{patientName}}</h3>
+      <h3>Message to: {{ patientName }}</h3>
       <label for="message">Message</label>
       <br />
       <input
         name="message"
         type="text"
         formControlName="message"
-        [class]="this.msgPatientForm.invalid && this.msgPatientForm.touched ? 'c-accent' : ''"
+        [class]="
+          this.msgPatientForm.invalid && this.msgPatientForm.touched
+            ? 'c-accent'
+            : ''
+        "
         placeholder="Your message here"
         required
       />
-      <p [style.opacity]="this.msgPatientForm.invalid && this.msgPatientForm.touched ? 1 : 0" class="c-accent">
-        Please add your given name
+      <p
+        [class]="
+          this.msgPatientForm.invalid && this.msgPatientForm.touched
+            ? 'c-accent'
+            : 'disappear'
+        "
+      >
+        Please add your message
       </p>
     </div>
     <button type="submit">💬🤧 SEND</button>
