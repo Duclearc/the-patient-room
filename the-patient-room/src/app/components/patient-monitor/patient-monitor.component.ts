@@ -9,7 +9,7 @@ import { PatientService } from './../../services/patient.service';
 })
 export class PatientMonitorComponent implements OnInit {
   @Input() patients: Patient[];
-  @Input() staff:boolean;
+  @Input() staff: boolean;
   called: number;
 
   constructor(
@@ -25,5 +25,9 @@ export class PatientMonitorComponent implements OnInit {
 
   endSession(patientID: number | string): void {
     this.patientService.endSession(patientID);
+  }
+
+  setMsgPatient(patientID: number | string): void {
+    this.patientService.setMsgPatient(patientID);
   }
 }

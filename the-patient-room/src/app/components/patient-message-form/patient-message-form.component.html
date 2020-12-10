@@ -1,5 +1,5 @@
 <div class="form">
-  <form #msgPatient (submit)="onSubmit(msgPatient)">
+  <form [formGroup]="msgPatientForm" (submit)="onSubmit()">
     <div class="control">
       <h3>Message to: {{patientName}}</h3>
       <label for="message">Message</label>
@@ -7,13 +7,12 @@
       <input
         name="message"
         type="text"
-        ngModel
-        #message="ngModel"
-        [class]="message.invalid && message.touched ? 'c-accent' : ''"
+        formControlName="message"
+        [class]="this.msgPatientForm.invalid && this.msgPatientForm.touched ? 'c-accent' : ''"
         placeholder="Your message here"
         required
       />
-      <p [style.opacity]="message.invalid && message.touched ? 1 : 0" class="c-accent">
+      <p [style.opacity]="this.msgPatientForm.invalid && this.msgPatientForm.touched ? 1 : 0" class="c-accent">
         Please add your given name
       </p>
     </div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { PatientService } from 'src/app/services/patient.service';
+import { Patient } from 'src/models/patient.model';
 
 @Component({
   selector: 'app-patient-message-form',
@@ -9,18 +11,34 @@ import { PatientService } from 'src/app/services/patient.service';
   styleUrls: ['./patient-message-form.component.css']
 })
 export class PatientMessageFormComponent implements OnInit {
-  patientName = 'Patient'
+  msgPatient: Patient;
+  msgPatientSubs: Subscription;
+  patientName = 'Patient';
+  msgPatientForm = this.fb.group({
+    message: ['', [Validators.required]]
+  })
 
   constructor(
     private router: Router,
-    private patientService: PatientService
+    private patientService: PatientService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.msgPatientSubs = this.patientService.getMsgPatient()
+      .subscribe((msgP: Patient) => {
+        this.msgPatient = msgP;
+
+        if (this.msgPatient) {
+          this.patientName = `${this.msgPatient.firstname} ${this.msgPatient.lastname}`
+        }
+      })
   }
 
-  onSubmit(msgPatient: NgForm) {
-    if (msgPatient.invalid) { return; }
-    console.log(msgPatient.value);
+  onSubmit() {
+    if (this.msgPatientForm.invalid) { return; }
+    this.patientService.sendMsg2Patient(this.msgPatientForm.value.message);
+
+    this.router.navigate(['staff-room']);
   }
 }

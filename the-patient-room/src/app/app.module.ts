@@ -23,7 +23,6 @@ import { PatientMessageFormComponent } from './components/patient-message-form/p
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

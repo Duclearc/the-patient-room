@@ -1,7 +1,10 @@
 <div id="room">
   <div class="card" [class]="staff ? 'c-banner' : 'c-light'">
-    <h1>Greetings</h1>
-    <h3>Welcome to the {{ room }} Room</h3>
+    <img src="./../../../assets/logo.png" alt="logo" class="logo">
+    <div id="greetings-text">
+      <h1>Greetings</h1>
+      <h3>Welcome to the {{ room }} Room</h3>
+    </div>
   </div>
   <div *ngIf="staff">
     <a routerLink="./add-patient">

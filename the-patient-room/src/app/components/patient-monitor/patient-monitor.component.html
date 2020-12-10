@@ -15,7 +15,8 @@
         REMOVE 🔕
       </button>
       <a routerLink="./message-patient">
-        <button class="c-accent">💬🤧 MESSAGE PATIENT</button>
+        <button
+        (click)="setMsgPatient(patient.id)" class="c-accent">💬🤧 MESSAGE PATIENT</button>
       </a>
     </div>
   </div>

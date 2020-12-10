@@ -1,0 +1,12 @@
+.logo {
+  max-width: 20%;
+  margin: 0 1rem 0 0;
+}
+.card {
+  display: flex;
+  padding: 1rem 0;
+  justify-content: center;
+}
+#greetings-text {
+  margin: 0 0 0 1rem;
+}

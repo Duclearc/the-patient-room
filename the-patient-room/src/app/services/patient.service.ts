@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Patient } from './../../models/patient.model';
 import * as dummy from './../../dummy';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,8 @@ export class PatientService {
     { ...dummy.default.patient, id: 3, firstname: 'patricia' },
   ];
   private updatedPatients = new BehaviorSubject<Patient[]>([...this.patients]);
+  msgPatient: Patient;
+  updatedMsgPatient = new BehaviorSubject<Patient>(undefined);
 
   constructor() { }
 
@@ -47,7 +49,16 @@ export class PatientService {
     this.patients.push(newPatient)
     this.updatedPatients.next([...this.patients]);
   }
-  loadMessageForm(patientID){
-    return
+  // MESSAGE PATIENT
+  setMsgPatient(patientID) {
+    this.msgPatient = this.patients.find(p => p.id === patientID);
+    this.updatedMsgPatient.next(this.msgPatient);
+  }
+  getMsgPatient() {
+    return this.updatedMsgPatient.asObservable();
+  }
+  sendMsg2Patient(msg) {
+    this.patients.find(p => p.id == this.msgPatient.id).messsage = msg;
+    this.updatedPatients.next([...this.patients]);
   }
 }
