@@ -1,57 +1,36 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
-import { tap } from "rxjs/operators";
+import {  Observable } from "rxjs";
 import { WebSocketSubject } from "rxjs/webSocket";
 import { Patient } from 'src/models/patient.model';
-import { SocketMessage, SocketRequest, SocketResponse } from '../../models/socketData.model';
-import { PatientService } from './patient.service';
+import { SocketData } from '../../models/socketData.model';
 
 @Injectable({ providedIn: 'root' })
 export class WebsocketService {
   public wsServerRequests = new Array<any>();
-
-  // private socket$: WebSocketSubject<SocketRequest | Patient[] | string>;
-  // private socket$: WebSocketSubject<MessageEvent<SocketMessage>>;
-  private socket$: WebSocketSubject<SocketMessage>;
-  public socketListener$: Observable<SocketRequest | Patient[] | string>; //<any>  <- same as here
+  private socket$: WebSocketSubject<SocketData>;
+  public socketListener$: Observable<SocketData | Patient[] | string>;
 
   constructor() {
 
-    this.socket$ = new WebSocketSubject<SocketMessage>({
-    // this.socket$ = new WebSocketSubject<MessageEvent<SocketMessage>>({
+    this.socket$ = new WebSocketSubject<SocketData>({
       url: 'ws://localhost:4000',
       deserializer: (rawMessage) => JSON.parse(rawMessage.data),
     });
-    // this.socketListener$ = this.socket$.asObservable();
-
-    // this.socket$
-    //   .subscribe(
-    //     (wsData: string) => {
-    //       console.log('🟡 Angular: received -> ', wsData)
-    //       console.log(typeof wsData);
-
-    //       const socketRES = JSON.parse(wsData) as Patient[];
-    //       console.log(socketRES, 'sock RES');
-    //       //  ?????????
-    //       // HOW DO I PASS socketRES TO patients IN patient.service.ts
-    //       //  ??????????
-
-    //     },
-    //     (err) => {
-    //       console.error(err);
-    //     },
-    //     () => console.warn('Completed!')
-    //   );
   }
 
-  getSocket(): Observable<SocketMessage> {
-    return this.socket$.asObservable();//.pipe(tap(wsData => console.log('message received:', wsData)));
+  getSocket(): Observable<SocketData> {
+    return this.socket$.asObservable();
+  }
+  public wsRequest(data: SocketData["data"], action: SocketData["type"]) {
+    const wsData: SocketData = {
+      data: data,
+      type: action,
+    };
+    this.send(wsData);
   }
 
-  public send(data: SocketMessage): void | Patient[] {
+  private send(data: SocketData): void | Patient[] {
     this.wsServerRequests.push(data);
     this.socket$.next(data);
-    console.log('SEND ACTIVATED. data -> ', data);
-    // //❌//❌//❌//❌//❌
   }
 }

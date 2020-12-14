@@ -13,4 +13,21 @@ const PatientSchema = new Schema({
     messsage: { type: String, required: false }
 })
 const Patient = model('Patient', PatientSchema);
-export default Patient;
+
+interface PatientInterface {
+    id: number;
+    firstname: string;
+    lastname: string;
+    email?: string;
+    password?: string;
+    phone?: string;
+    img?: string;
+    created: string;
+    last_visit?: string;
+    in_session: boolean;
+    messsage: string;
+}
+
+export type PatientData = Omit<PatientInterface, 'id' | 'created'>;
+
+export { Patient, PatientInterface };

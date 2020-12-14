@@ -13,7 +13,7 @@ import { Patient } from 'src/models/patient.model';
 export class PatientMessageFormComponent implements OnInit {
   msgPatient: Patient;
   msgPatientSubs: Subscription;
-  patientName = 'All Patients';
+  patientName: string;
   msgPatientForm = this.fb.group({
     message: ['', [Validators.required]]
   })
@@ -31,6 +31,8 @@ export class PatientMessageFormComponent implements OnInit {
 
         if (this.msgPatient) {
           this.patientName = `${this.msgPatient.firstname} ${this.msgPatient.lastname}`
+        } else {
+          this.patientName = 'All Patients';
         }
       })
   }

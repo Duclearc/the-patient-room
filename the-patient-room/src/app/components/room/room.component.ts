@@ -26,5 +26,7 @@ export class RoomComponent implements OnInit {
     console.log('room calls getPatients()');
     this.patientService.getPatients();
   }
-
+  setMsgPatient(): void {
+    this.patientService.setMsgPatient(undefined);
+  }
 }

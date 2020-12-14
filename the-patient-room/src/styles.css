@@ -94,7 +94,6 @@ input {
 label {
   opacity: 0;
 }
-
 .control input {
   width: 80%;
   font-size: 2rem;
@@ -120,3 +119,19 @@ label {
 .disappear {
   opacity: 0;
 }
+/* @media(min-width: 1024px) {
+  #room {
+    display: flex;
+  }
+  #greetings {
+    flex-direction: column;
+    justify-content: center;
+    max-width: 20%;
+  }
+  #greetings-text {
+    margin: auto;
+  }
+  #patient-monitor {
+    width: 80%;
+  }
+} */

@@ -18,6 +18,8 @@
         <button
         (click)="setMsgPatient(patient.id)" class="c-accent">💬🤧 MESSAGE PATIENT</button>
       </a>
+      <button *ngIf="patient.messsage"
+        (click)="removeMsg(patient.id)" class="c-accent">❌💬 REMOVE MESSAGE</button>
     </div>
   </div>
 </div>

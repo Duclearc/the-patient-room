@@ -3,8 +3,8 @@ import * as express from 'express';
 import { createServer } from 'http';
 import * as WebSocket from 'ws';
 import { connect, Query } from 'mongoose';
-import Patient from './database/patient.model';
-import { SocketRequest, SocketResponse } from './database/socketData.model';
+import { Patient } from './database/patient';
+import { SocketData } from './database/socketData.model';
 import * as patientActions from './database/patient.actions';
 dotenv.config();
 const PORT = process.env.PORT || 1234;
@@ -30,15 +30,12 @@ connect(process.env.DB_URL as string, { useNewUrlParser: true, useUnifiedTopolog
     // now that it's connected, send message...
     ws.on('message', (frontendData: string) => {
       // format data
-      const { data, type } = JSON.parse(frontendData) as SocketRequest;
+      const wsData = JSON.parse(frontendData) as SocketData;
       console.log('🔹 received -> ', frontendData);
-      console.log('🔹 type -> ', typeof frontendData);
-      console.log(data, 'data');
-      console.log(type, 'type');
       // trigger appropriate action
-      (triggerAction(data, type) as Promise<any>)
+      (triggerAction(wsData) as Promise<any>)
         // send response to frontend
-        .then(resData => socketRES(resData, type))
+        .then(resData => socketRES({ ...wsData, data: resData }));
     });
     // alerts for my peace of mind...
     // ws.send('🔵 WebSocket Server is on!');
@@ -48,9 +45,8 @@ connect(process.env.DB_URL as string, { useNewUrlParser: true, useUnifiedTopolog
     })
   });
   // -----------
-  Patient.watch().on('change', change => {
+  Patient.watch().on('change', () => {
     console.log('🟡 DB has been altered');
-    console.log(JSON.stringify(change), '<----THIS IS THE CHANGE!!! 🔴')
   })
 }) // * DEL THIS IF db DOESNT WORK
 
@@ -67,20 +63,13 @@ setInterval(() => {
 
 HTTPserver.listen(PORT, () => console.log('🔵 Server has started and runs on port: ' + PORT));
 
-const socketRES = (receivedData: Object, action: string) => {
-  wsServer.clients.forEach(client => {
-    console.log(`🟡 RES FOR '${action}' SENT`);
-    client.send(JSON.stringify({
-      // you should put here the type of your message, one of the types as SocketMessage: 'add-patient' | 'set-patient-in-session' | 'set-patient-out-session' | 'get-patient' | 'patients-list' //✅
-      type: action, // I'm leaving patients-list for now so you can test if you get it in your patients service
-      data: receivedData,
-    }));
-  });
-  console.log(`🟡 NEW ${action} -> ${receivedData}`);
-}
+const socketRES = (wsData: SocketData) => wsServer.clients.forEach(client => client.send(JSON.stringify(wsData)));
 
-const triggerAction = (data: any, eventType: string): Promise<any> | Query<any, any> | undefined => {
-  console.log('🟡 event detected-> ', eventType);
+const triggerAction = (wsData: SocketData): Promise<any> | Query<any, any> | undefined => {
+  console.log('🟡 event detected-> ', wsData.type);
+  const { data, type: eventType } = wsData;
   if (eventType === 'add-patient') return patientActions.addPatient(data);
   else if (eventType == 'get-patients') return patientActions.getPatients();
+  else if (eventType == 'remove-patient') return patientActions.removePatients(data);
+  else if (eventType === 'message-patient' || 'set-patient-in-session' || 'set-patient-out-session') return patientActions.editPatient(data);
 }

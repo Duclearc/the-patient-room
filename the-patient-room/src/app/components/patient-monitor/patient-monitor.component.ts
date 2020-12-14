@@ -19,15 +19,21 @@ export class PatientMonitorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  callPatient(patientID: number | string): void {
+  callPatient(patientID: number): void {
     this.patientService.callPatient(patientID);
   }
 
-  endSession(patientID: number | string): void {
+  endSession(patientID: number): void {
     this.patientService.endSession(patientID);
   }
 
-  setMsgPatient(patientID: number | string): void {
+  setMsgPatient(patientID: number): void {
     this.patientService.setMsgPatient(patientID);
   }
+  removeMsg(patientID: number): void {
+    this.patientService.setMsgPatient(patientID);
+    this.patientService.sendMsg2Patient('');
+    this.patientService.setMsgPatient(undefined);
+  }
+
 }

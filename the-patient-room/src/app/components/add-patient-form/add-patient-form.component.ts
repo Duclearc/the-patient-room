@@ -17,8 +17,8 @@ export class AddPatientFormComponent implements OnInit {
   ) { }
 
   addPatient = this.fb.group({
-    firstname: ['', [Validators.required, Validators.minLength(3)]],
-    lastname: ['', [Validators.required, Validators.minLength(3)]],
+    firstname: ['', [Validators.required, Validators.minLength(2)]],
+    lastname: ['', [Validators.required, Validators.minLength(2)]],
   })
 
   ngOnInit(): void {
