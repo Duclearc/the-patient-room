@@ -6,8 +6,8 @@ export interface Patient {
   password?: string;
   phone?: string;
   img?: string;
-  created?: string;
-  last_visit: string;
+  created: string;
+  last_visit?: string;
   in_session: boolean;
   messsage?: string;
 }

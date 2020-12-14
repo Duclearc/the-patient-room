@@ -13,10 +13,16 @@ const routes: Routes = [
   {
     path: 'patient-room',
     component: RoomComponent,
+    data: {
+      staff: false,
+    }
   },
   {
     path: 'staff-room',
     component: RoomComponent,
+    data: {
+      staff: true,
+    },
     children: [
       {
         path: 'add-patient',

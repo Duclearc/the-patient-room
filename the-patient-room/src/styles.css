@@ -60,7 +60,8 @@ a:hover,
 a:active {
   font-weight: bold;
 }
-a:focus {
+a:focus,
+a.active {
   color: rgba(178, 28, 28, 1);
 }
 

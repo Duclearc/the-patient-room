@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Patient } from './../../../models/patient.model';
 import { ActivatedRoute } from '@angular/router';
 import { PatientService } from './../../services/patient.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { pluck, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-room',
@@ -11,11 +12,10 @@ import { Subscription } from 'rxjs';
 })
 export class RoomComponent implements OnInit {
 
-  patientSubs: Subscription;
-  patients: Patient[];
-  staff = false;
-  room = 'Patient';
-  called: number;
+  patients$: Observable<Patient[]> = this.patientService.getPatientsListener();
+  staff$: Observable<boolean> = this.route.data.pipe(pluck('staff'));
+  room$ = this.staff$.pipe(map(staff => staff ? 'Staff' : 'Patient'));
+
 
   constructor(
     private route: ActivatedRoute,
@@ -23,14 +23,8 @@ export class RoomComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.url.subscribe(path => {
-      if (path[0].toString().includes('staff')) {
-        this.staff = true;
-        this.room = 'Staff';
-      }
-    });
-    this.patientSubs = this.patientService.getPatientsListener()
-      .subscribe(patients => this.patients = patients);
+    console.log('room calls getPatients()');
+    this.patientService.getPatients();
   }
 
 }
