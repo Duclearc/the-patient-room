@@ -7,7 +7,9 @@ export interface SocketData {
   'get-patients' |
   'remove-patient' |
   'message-patient' |
-  'message-all-patients';
+  'message-all-patients' |
+  'undo-message-patient' |
+  'undo-message-all-patients';
   data: Patient |
   Patient[] |
   Patient['message'] |

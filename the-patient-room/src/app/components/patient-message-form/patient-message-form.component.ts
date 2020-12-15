@@ -40,9 +40,9 @@ export class PatientMessageFormComponent implements OnInit {
   onSubmit() {
     if (this.msgPatientForm.invalid) { return; }
     if (this.msgPatient) {
-      this.patientService.sendMsg2Patient(this.msgPatientForm.value.message);
+      this.patientService.sendMsg2Patient(this.msgPatientForm.value.message, 'message-patient');
     } else {
-      this.patientService.send2AllPatients(this.msgPatientForm.value.message);
+      this.patientService.send2AllPatients(this.msgPatientForm.value.message, 'message-all-patients');
     }
     this.router.navigate(['staff-room']);
   }

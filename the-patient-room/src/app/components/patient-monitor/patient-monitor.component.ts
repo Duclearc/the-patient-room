@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Patient } from './../../../models/patient.model';
 import { PatientService } from './../../services/patient.service';
 
@@ -41,7 +41,7 @@ export class PatientMonitorComponent implements OnInit {
   }
   removeMsg(patientID: number): void {
     this.patientService.setMsgPatient(patientID);
-    this.patientService.sendMsg2Patient('');
+    this.patientService.sendMsg2Patient('', 'undo-message-patient');
     this.patientService.setMsgPatient(undefined);
   }
   setRoom($event: any) {

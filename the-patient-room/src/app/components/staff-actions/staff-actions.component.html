@@ -2,10 +2,10 @@
     <a routerLink="./add-patient">
       <button>➕🤧 NEW PATIENT</button>
     </a>
-    <a routerLink="./message-patient">
+    <a *ngIf="patientsExist" routerLink="./message-patient">
       <button (click)="setMsgPatient()">💬👨‍👩‍👧‍👦 MESSAGE ALL PATIENTS</button>
     </a>
-    <button (click)="removeAllMessages()">💬❌ REMOVE ALL MESSAGES</button>
+    <button *ngIf="messageAllCounter" (click)="removeAllMessages()">💬❌ REMOVE ALL MESSAGES</button>
     <a routerLink="./">
       <button>BACK</button>
     </a>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Patient } from './../../models/patient.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { WebsocketService } from './websocket.service';
+import { SocketData } from 'src/models/socketData.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,13 @@ export class PatientService {
     );
     this.ws.getSocket()
       .subscribe(socket$ => {
+        if (
+          socket$.type === 'message-all-patients' ||
+          socket$.type === 'message-patient' ||
+          socket$.type === 'set-patient-in-session'
+        ) {
+            this.playChime();
+        }
         if (socket$.type === 'get-patients') {
           this.patients = socket$.data as Patient[];
           this.sortByInSession();
@@ -54,7 +62,6 @@ export class PatientService {
       targetPatient,
       'set-patient-in-session'
     );
-    this.playChime();
     this.updatePatients();
   }
   endSession(patientID: number): void {
@@ -105,7 +112,7 @@ export class PatientService {
   getMsgPatient() {
     return this.updatedMsgPatient$.asObservable();
   }
-  sendMsg2Patient(msg: string) {
+  sendMsg2Patient(msg: string, eventType: SocketData['type']) {
     this.patients.find(p => p.id == this.msgPatient.id).message = msg;
     const editedPatient: Patient = {
       ...this.msgPatient,
@@ -113,16 +120,16 @@ export class PatientService {
     }
     this.ws.wsRequest(
       editedPatient,
-      'message-patient'
+      eventType
     );
     this.updatePatients();
     this.msgPatient = undefined;
   }
-  send2AllPatients(msg: Patient['message']) {
+  send2AllPatients(msg: Patient['message'], eventType: SocketData['type']) {
     this.patients.forEach(p => p.message = msg);
     this.ws.wsRequest(
       msg,
-      'message-all-patients'
+      eventType
     );
     this.updatePatients(50);
   }

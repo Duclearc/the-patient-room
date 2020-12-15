@@ -1,5 +1,5 @@
 <div class="card" id="patient-monitor">
-  <app-staff-actions *ngIf="staff"></app-staff-actions>
+  <app-staff-actions *ngIf="staff" [patientsExist]="patients.length > 0"></app-staff-actions>
   <div
     class="card"
     [class]="patient.in_session ? 'c-accent' : 'c-normal'"
