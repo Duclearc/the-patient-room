@@ -21,7 +21,12 @@ export class PatientMonitorComponent implements OnInit {
   }
 
   callPatient(patientID: number, room = this.room): void {
+    if(!this.room) {
+      alert('Please select a room');
+      return;
+    }
     this.patientService.callPatient(patientID, room);
+    this.room = '';
   }
 
   endSession(patientID: number): void {

@@ -18,16 +18,19 @@
     </p>
 
     <div *ngIf="staff">
-      <div class="dropdown">
-        <button class="c-accent dropbtn" (click)="callPatient(patient.id)">
-          CALL TO ROOM 🔔
-          <select (change)="setRoom($event)">
-            <option *ngFor="let room of rooms" [value]='room'>{{room}}</option>
-          </select>
-        </button>
-      </div>
-      <button *ngIf="patient.in_session" class="c-accent" (click)="endSession(patient.id)">
-        END CALL 🔕
+      <button *ngIf="!patient.in_session" class="c-accent dropbtn" (click)="callPatient(patient.id)">
+        🔔 CALL TO ROOM
+        <select (change)="setRoom($event)">
+          <option value="">( room )</option>
+          <option *ngFor="let room of rooms" [value]="room">{{ room }}</option>
+        </select>
+      </button>
+      <button
+        *ngIf="patient.in_session"
+        class="c-accent"
+        (click)="endSession(patient.id)"
+      >
+        🔕 END CALL
       </button>
       <button class="c-accent" (click)="removePatient(patient.id)">
         ❌ REMOVE

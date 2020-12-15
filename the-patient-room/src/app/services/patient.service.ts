@@ -18,7 +18,12 @@ export class PatientService {
   // ------
 
   constructor(private ws: WebsocketService) { }
-
+  private playChime() {
+    const audio = new Audio();
+    audio.src = "./../../assets/chime.mp3";
+    audio.load();
+    audio.play();
+  }
   private sortByInSession() {
     return this.patients.sort((thisP, prevP) => +prevP.in_session - +thisP.in_session)
   }
@@ -49,6 +54,7 @@ export class PatientService {
       targetPatient,
       'set-patient-in-session'
     );
+    this.playChime();
     this.updatePatients();
   }
   endSession(patientID: number): void {
