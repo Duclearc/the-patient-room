@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { Patient } from './../../../models/patient.model';
 import { PatientService } from './../../services/patient.service';
 
@@ -10,7 +10,8 @@ import { PatientService } from './../../services/patient.service';
 export class PatientMonitorComponent implements OnInit {
   @Input() patients: Patient[];
   @Input() staff: boolean;
-  called: number;
+  room: string;
+  rooms = ['1', '2', '3', 'Kids', 'Accessibility'];
 
   constructor(
     private patientService: PatientService,
@@ -19,12 +20,15 @@ export class PatientMonitorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  callPatient(patientID: number): void {
-    this.patientService.callPatient(patientID);
+  callPatient(patientID: number, room = this.room): void {
+    this.patientService.callPatient(patientID, room);
   }
 
   endSession(patientID: number): void {
     this.patientService.endSession(patientID);
+  }
+  removePatient(patientID: number): void {
+    this.patientService.removePatient(patientID);
   }
 
   setMsgPatient(patientID: number): void {
@@ -34,6 +38,9 @@ export class PatientMonitorComponent implements OnInit {
     this.patientService.setMsgPatient(patientID);
     this.patientService.sendMsg2Patient('');
     this.patientService.setMsgPatient(undefined);
+  }
+  setRoom($event: any) {
+    this.room = ($event.target as HTMLOptionElement).value;
   }
 
 }

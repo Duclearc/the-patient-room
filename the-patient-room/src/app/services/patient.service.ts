@@ -39,22 +39,29 @@ export class PatientService {
   getPatientsListener(): Observable<Patient[]> {
     return this.updatedPatients$.asObservable();
   }
-  callPatient(patientID: number | string): void {
-    this.patients.find(patient => patient.id === patientID).in_session = true;
+  callPatient(patientID: number, room: string): void {
+    const targetPatient = {
+      ...this.patients.find(patient => patient.id === patientID),
+      in_session: true,
+      room: room,
+    };
     this.ws.wsRequest(
-      this.patients.find(patient => patient.id === patientID),
+      targetPatient,
       'set-patient-in-session'
     );
     this.updatePatients();
   }
-  endSession(patientID: number | string): void {
-    this.patients.find(patient => patient.id === patientID).in_session = false;
+  endSession(patientID: number): void {
+    const targetPatient = {
+      ...this.patients.find(patient => patient.id === patientID),
+      in_session: false,
+      room: '',
+    };
     this.ws.wsRequest(
-      this.patients.find(patient => patient.id === patientID),
+      targetPatient,
       'set-patient-out-session'
     );
-    // this.updatePatients(); //! -> UNCOMMENT IF 'END SESSION DOES NOT REMOVE PATIENT AUTOMATICALLY
-    this.removePatient(patientID);
+    this.updatePatients();
   }
   removePatient(patientID) {
     this.patients = this.patients.filter(p => p.id !== patientID);
@@ -74,6 +81,7 @@ export class PatientService {
       created: now,
       in_session: false,
       message: '',
+      room: '',
     }
     this.patients.push(newPatient)
     this.ws.wsRequest(

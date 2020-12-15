@@ -7,20 +7,43 @@
   >
     <p>NAME: {{ patient.firstname }} {{ patient.lastname }}</p>
     <!-- <p>WAITING-TIME: {{ patient.last_visit }}</p> -->
-    <p class="patient-message" [class]="patient.message ? 'c-accent':'disappear'">{{patient.message ? '💬: '+ patient.message:''}}</p>
+    <p class="patient-info" [class]="patient.room ? 'c-accent' : 'disappear'">
+      {{ patient.room ? "🚪: " + patient.room : "" }}
+    </p>
+    <p
+      class="patient-info"
+      [class]="patient.message ? 'c-accent' : 'disappear'"
+    >
+      {{ patient.message ? "💬: " + patient.message : "" }}
+    </p>
+
     <div *ngIf="staff">
-      <button class="c-accent" (click)="callPatient(patient.id)">
-        CALL 🔔
+      <div class="dropdown">
+        <button class="c-accent dropbtn" (click)="callPatient(patient.id)">
+          CALL TO ROOM 🔔
+          <select (change)="setRoom($event)">
+            <option *ngFor="let room of rooms" [value]='room'>{{room}}</option>
+          </select>
+        </button>
+      </div>
+      <button *ngIf="patient.in_session" class="c-accent" (click)="endSession(patient.id)">
+        END CALL 🔕
       </button>
-      <button class="c-accent" (click)="endSession(patient.id)">
-        REMOVE 🔕
+      <button class="c-accent" (click)="removePatient(patient.id)">
+        ❌ REMOVE
       </button>
       <a routerLink="./message-patient">
-        <button
-        (click)="setMsgPatient(patient.id)" class="c-accent">💬🤧 MESSAGE PATIENT</button>
+        <button (click)="setMsgPatient(patient.id)" class="c-accent">
+          💬🤧 MESSAGE PATIENT
+        </button>
       </a>
-      <button *ngIf="patient.message"
-        (click)="removeMsg(patient.id)" class="c-accent">❌💬 REMOVE MESSAGE</button>
+      <button
+        *ngIf="patient.message"
+        (click)="removeMsg(patient.id)"
+        class="c-accent"
+      >
+        ❌💬 REMOVE MESSAGE
+      </button>
     </div>
   </div>
 </div>

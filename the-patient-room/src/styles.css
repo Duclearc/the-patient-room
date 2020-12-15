@@ -166,6 +166,15 @@ img.logo {
 img {
   max-height: 100px;
 }
+select,
+options {
+  border: none;
+  background-color: inherit;
+  font-size: inherit;
+  outline: none;
+  text-align: center;
+  text-transform: uppercase;
+}
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media (max-width: 700px) {
   .row {
