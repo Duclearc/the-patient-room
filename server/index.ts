@@ -71,6 +71,6 @@ const triggerAction = (wsData: SocketData) => {
   if (eventType == 'add-patient') return patientActions.addPatient(data as PatientInterface);
   if (eventType == 'get-patients') return patientActions.getPatients();
   if (eventType == 'remove-patient') return patientActions.removePatient(data as PatientInterface['id']);
-  if (eventType == 'message-all-patients') return patientActions.messageAllPatients(data as PatientInterface['message']);
-  if (eventType == 'message-patient' || 'set-patient-in-session' || 'set-patient-out-session') return patientActions.editPatient(data as PatientInterface);
+  if (eventType == 'message-all-patients' || 'undo-message-all-patients') return patientActions.messageAllPatients(data as PatientInterface['message']);
+  if (eventType == 'message-patient' || 'undo-message-patient' || 'set-patient-in-session' || 'set-patient-out-session') return patientActions.editPatient(data as PatientInterface);
 }
