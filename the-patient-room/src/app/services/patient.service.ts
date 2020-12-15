@@ -19,6 +19,9 @@ export class PatientService {
 
   constructor(private ws: WebsocketService) { }
 
+  private sortByInSession() {
+    return this.patients.sort((thisP, prevP) => +prevP.in_session - +thisP.in_session)
+  }
   getPatients(): void {
     this.ws.wsRequest(
       null,
@@ -28,6 +31,7 @@ export class PatientService {
       .subscribe(socket$ => {
         if (socket$.type === 'get-patients') {
           this.patients = socket$.data as Patient[];
+          this.sortByInSession();
           this.updatedPatients$.next([...this.patients]);
         }
       });
@@ -41,6 +45,7 @@ export class PatientService {
       this.patients.find(patient => patient.id === patientID),
       'set-patient-in-session'
     );
+    this.updatePatients();
   }
   endSession(patientID: number | string): void {
     this.patients.find(patient => patient.id === patientID).in_session = false;
@@ -48,6 +53,7 @@ export class PatientService {
       this.patients.find(patient => patient.id === patientID),
       'set-patient-out-session'
     );
+    // this.updatePatients(); //! -> UNCOMMENT IF 'END SESSION DOES NOT REMOVE PATIENT AUTOMATICALLY
     this.removePatient(patientID);
   }
   removePatient(patientID) {
@@ -57,7 +63,7 @@ export class PatientService {
       patientID,
       'remove-patient'
     );
-    this.updatedPatients$.next([...this.patients]);
+    this.updatePatients();
   }
   addPatient(data) {
     const now = new Date().toLocaleString('de-de');
@@ -67,14 +73,14 @@ export class PatientService {
       lastname: data.lastname,
       created: now,
       in_session: false,
-      messsage: '',
+      message: '',
     }
     this.patients.push(newPatient)
-    this.updatedPatients$.next([...this.patients]);
     this.ws.wsRequest(
       newPatient,
       'add-patient'
     );
+    this.updatePatients();
   }
   // MESSAGE PATIENT
   setMsgPatient(patientID: number) {
@@ -86,24 +92,27 @@ export class PatientService {
     return this.updatedMsgPatient$.asObservable();
   }
   sendMsg2Patient(msg: string) {
-    this.patients.find(p => p.id == this.msgPatient.id).messsage = msg;
+    this.patients.find(p => p.id == this.msgPatient.id).message = msg;
     const editedPatient: Patient = {
       ...this.msgPatient,
-      messsage: msg,
+      message: msg,
     }
     this.ws.wsRequest(
       editedPatient,
       'message-patient'
     );
-    this.updatedPatients$.next([...this.patients]);
+    this.updatePatients();
     this.msgPatient = undefined;
   }
-  send2AllPatients(msg: Patient['messsage']) {
-    this.patients.forEach(p => p.messsage = msg);
+  send2AllPatients(msg: Patient['message']) {
+    this.patients.forEach(p => p.message = msg);
     this.ws.wsRequest(
-      msg as Patient['messsage'],
+      msg,
       'message-all-patients'
     );
-    this.updatedPatients$.next([...this.patients]);
+    this.updatePatients(50);
+  }
+  updatePatients(time = 10) {
+    setTimeout(() => this.getPatients(), time);
   }
 }

@@ -15,4 +15,7 @@ export class StaffActionsComponent implements OnInit {
   setMsgPatient(): void {
     this.patientService.setMsgPatient(undefined);
   }
+  removeAllMessages(): void {
+    this.patientService.send2AllPatients('');
+  }
 }

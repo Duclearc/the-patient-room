@@ -10,6 +10,6 @@ export interface SocketData {
     'message-all-patients';
     data: PatientInterface |
     PatientInterface[] |
-    PatientInterface['messsage'] |
+    PatientInterface['message'] |
     PatientInterface['id'];
 }

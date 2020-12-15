@@ -10,7 +10,7 @@ const PatientSchema = new Schema({
     created: { type: String, required: true },
     last_visit: { type: Date, required: false },//❌
     in_session: { type: Boolean, required: true },
-    messsage: { type: String, required: true }
+    message: { type: String, required: false }
 })
 const Patient = model('Patient', PatientSchema);
 
@@ -25,7 +25,7 @@ interface PatientInterface {
     created: string;
     last_visit?: string;
     in_session: boolean;
-    messsage: string;
+    message: string;
 }
 
 export type PatientData = Omit<PatientInterface, 'id' | 'created'>;

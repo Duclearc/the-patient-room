@@ -12,6 +12,6 @@ export function editPatient(editedPatient: PatientInterface) {
     const updatedPatient = new Patient(editedPatient)
     return Patient.updateOne({ id: editedPatient.id }, updatedPatient);
 }
-export function messageAllPatients(msg: PatientInterface['messsage']) {
+export function messageAllPatients(msg: PatientInterface['message']) {
     return Patient.updateMany({}, { $set: { message: msg } });
 }
