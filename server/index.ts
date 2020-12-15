@@ -3,7 +3,7 @@ import * as express from 'express';
 import { createServer } from 'http';
 import * as WebSocket from 'ws';
 import { connect, Query } from 'mongoose';
-import { Patient, PatientInterface } from './database/patient';
+import { PatientModel, PatientInterface } from './database/patient';
 import { SocketData } from './database/socketData.model';
 import * as patientActions from './database/patient.actions';
 dotenv.config();
@@ -45,7 +45,7 @@ connect(process.env.DB_URL as string, { useNewUrlParser: true, useUnifiedTopolog
     })
   });
   // -----------
-  Patient.watch().on('change', () => {
+  PatientModel.watch().on('change', () => {
     console.log('🟡 DB has been altered');
   })
 }) // * DEL THIS IF db DOESNT WORK
