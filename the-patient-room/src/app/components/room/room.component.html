@@ -1,25 +1,21 @@
-<div id="room">
-  <div id="greetings" class="card" [class]="(staff$ | async) ? 'c-banner' : 'c-light'">
-    <img src="/assets/logo.png" alt="logo" class="logo" />
-    <div id="greetings-text">
-      <h1>Greetings</h1>
-      <h3>Welcome to the {{ room$ | async }} Room</h3>
+<div id="room" class="row">
+  <div class="side">
+    <div
+      id="greetings"
+      class="card"
+      [class]="(staff$ | async) ? 'c-banner' : 'c-light'"
+    >
+      <img src="/assets/logo.png" alt="logo" class="logo" />
+      <div id="greetings-text">
+        <h1>Greetings</h1>
+        <h3>Welcome to the {{ room$ | async }} Room</h3>
+      </div>
     </div>
   </div>
-  <div class="staff-actions" *ngIf="staff$ | async">
-    <a routerLink="./add-patient">
-      <button>➕🤧 NEW PATIENT</button>
-    </a>
-    <a routerLink="./message-patient">
-      <button (click)="setMsgPatient()">💬👨‍👩‍👧‍👦 MESSAGE ALL PATIENTS</button>
-    </a>
-    <a routerLink="./">
-      <button>BACK</button>
-    </a>
-    <router-outlet></router-outlet>
+  <div class="main">
+    <app-patient-monitor
+      [patients]="patients$ | async"
+      [staff]="staff$ | async"
+    ></app-patient-monitor>
   </div>
-  <app-patient-monitor
-    [patients]="patients$ | async"
-    [staff]="staff$ | async"
-  ></app-patient-monitor>
 </div>

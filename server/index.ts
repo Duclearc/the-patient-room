@@ -3,7 +3,7 @@ import * as express from 'express';
 import { createServer } from 'http';
 import * as WebSocket from 'ws';
 import { connect, Query } from 'mongoose';
-import { Patient } from './database/patient';
+import { Patient, PatientInterface } from './database/patient';
 import { SocketData } from './database/socketData.model';
 import * as patientActions from './database/patient.actions';
 dotenv.config();
@@ -65,11 +65,12 @@ HTTPserver.listen(PORT, () => console.log('🔵 Server has started and runs on p
 
 const socketRES = (wsData: SocketData) => wsServer.clients.forEach(client => client.send(JSON.stringify(wsData)));
 
-const triggerAction = (wsData: SocketData): Promise<any> | Query<any, any> | undefined => {
+const triggerAction = (wsData: SocketData) => {
   console.log('🟡 event detected-> ', wsData.type);
   const { data, type: eventType } = wsData;
-  if (eventType === 'add-patient') return patientActions.addPatient(data);
-  else if (eventType == 'get-patients') return patientActions.getPatients();
-  else if (eventType == 'remove-patient') return patientActions.removePatients(data);
-  else if (eventType === 'message-patient' || 'set-patient-in-session' || 'set-patient-out-session') return patientActions.editPatient(data);
+  if (eventType == 'add-patient') return patientActions.addPatient(data as PatientInterface);
+  if (eventType == 'get-patients') return patientActions.getPatients();
+  if (eventType == 'remove-patient') return patientActions.removePatient(data as PatientInterface['id']);
+  if (eventType == 'message-all-patients') return patientActions.messageAllPatients(data as PatientInterface['messsage']);
+  if (eventType == 'message-patient' || 'set-patient-in-session' || 'set-patient-out-session') return patientActions.editPatient(data as PatientInterface);
 }

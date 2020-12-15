@@ -98,10 +98,10 @@ export class PatientService {
     this.updatedPatients$.next([...this.patients]);
     this.msgPatient = undefined;
   }
-  send2AllPatients(msg) {
+  send2AllPatients(msg: Patient['messsage']) {
     this.patients.forEach(p => p.messsage = msg);
     this.ws.wsRequest(
-      this.patients,
+      msg as Patient['messsage'],
       'message-all-patients'
     );
     this.updatedPatients$.next([...this.patients]);

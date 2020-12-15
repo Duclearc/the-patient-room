@@ -23,10 +23,6 @@ export class RoomComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('room calls getPatients()');
     this.patientService.getPatients();
-  }
-  setMsgPatient(): void {
-    this.patientService.setMsgPatient(undefined);
   }
 }

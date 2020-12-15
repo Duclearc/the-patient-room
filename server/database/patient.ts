@@ -10,7 +10,7 @@ const PatientSchema = new Schema({
     created: { type: String, required: true },
     last_visit: { type: Date, required: false },//❌
     in_session: { type: Boolean, required: true },
-    messsage: { type: String, required: false }
+    messsage: { type: String, required: true }
 })
 const Patient = model('Patient', PatientSchema);
 

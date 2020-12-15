@@ -8,6 +8,7 @@ import { RoomComponent } from './components/room/room.component';
 import { AddPatientFormComponent } from './components/add-patient-form/add-patient-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PatientMessageFormComponent } from './components/patient-message-form/patient-message-form.component';
+import { StaffActionsComponent } from './components/staff-actions/staff-actions.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { PatientMessageFormComponent } from './components/patient-message-form/p
     NavbarComponent,
     RoomComponent,
     AddPatientFormComponent,
-    PatientMessageFormComponent
+    PatientMessageFormComponent,
+    StaffActionsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,15 @@
+import { PatientInterface } from './patient';
+
 export interface SocketData {
-    type: 'add-patient' | 'set-patient-in-session' | 'set-patient-out-session' | 'get-patients' | 'remove-patient'| 'message-patient'|
+    type: 'add-patient' |
+    'set-patient-in-session' |
+    'set-patient-out-session' |
+    'get-patients' |
+    'remove-patient' |
+    'message-patient' |
     'message-all-patients';
-    data: any;
+    data: PatientInterface |
+    PatientInterface[] |
+    PatientInterface['messsage'] |
+    PatientInterface['id'];
 }

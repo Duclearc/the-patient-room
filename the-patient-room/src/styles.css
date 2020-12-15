@@ -70,7 +70,7 @@ a.active {
   border-radius: 15px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
   margin: 1rem auto;
-  max-width: 80%;
+  max-width: 95%;
   padding: 0.2rem;
 }
 button {
@@ -113,25 +113,84 @@ label {
 .control button {
   margin-bottom: 1rem;
 }
-.logo {
-  max-width: 10rem;
-}
 .disappear {
   opacity: 0;
 }
-/* @media(min-width: 1024px) {
-  #room {
-    display: flex;
-  }
-  #greetings {
+
+/* Column container */
+#room,
+.row {
+  display: flex;
+  /* flex-wrap: wrap; */
+}
+
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+  flex: 20%;
+  min-width: 150px;
+  max-width: 200px;
+}
+
+/* Main column */
+.main {
+  flex: 80%;
+}
+
+/* Fake image, just for this example */
+img.logo {
+  width: 100%;
+  padding: 0.5rem 0 1rem;
+  margin: 0 auto;
+}
+
+#greetings {
+  display: flex;
+  flex-direction: column;
+  max-width: fit-content;
+}
+#greetings-text {
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  text-transform: uppercase;
+  width: 100%;
+}
+#greetings-text h1,
+#greetings-text h3 {
+  padding: 10px;
+}
+#greetings,
+#patient-monitor {
+  min-height: 100%;
+}
+img {
+  max-height: 100px;
+}
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media (max-width: 700px) {
+  .row {
     flex-direction: column;
-    justify-content: center;
-    max-width: 20%;
   }
-  #greetings-text {
+  .side {
+    min-width: 90%;
+    width: 100%;
     margin: auto;
   }
-  #patient-monitor {
-    width: 80%;
+  #greetings {
+    display: flex;
+    flex-direction: row;
   }
-} */
+  #greetings-text {
+    writing-mode: horizontal-tb;
+    text-orientation: upright;
+    text-transform: none;
+    margin: auto;
+  }
+  .logo {
+    max-width: 20%;
+  }
+  img {
+    max-height: 100%;
+  }
+}
+
