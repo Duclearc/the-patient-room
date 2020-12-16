@@ -12,3 +12,6 @@ server/index.ts - line 78:
 src/app/components/room - line 13:
 - since those properties are used only to 'get data' from somewhere else and each is taken from a different mehtod, I opted away from a traditional subscription and used this syntatic sugar instead.
 - it's less code, easier to read (in my opinion) and service the same.
+
+src/services/patient.services.ts - line 155
+- added a bit of delay here as loading buffer

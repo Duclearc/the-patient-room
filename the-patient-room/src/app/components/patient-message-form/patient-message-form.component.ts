@@ -49,7 +49,7 @@ export class PatientMessageFormComponent implements OnInit {
       this.patientService.sendMsg2Patient(this.msgPatientForm.value.message, 'message-patient');
     } else { // else, send message to all patients
       this.patientService.send2AllPatients(this.msgPatientForm.value.message, 'message-all-patients');
-    }
+    };
     this.router.navigate(['staff-room']); // navidates away from the form
   };
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PatientService } from 'src/app/services/patient.service';
 import { Patient } from 'src/models/patient.model';
 
@@ -11,7 +11,7 @@ export class PatientMonitorComponent {
   //? properties
   @Input() patients: Patient[];
   @Input() staff: boolean;
-  room: string;
+  room: Patient['room'];
   rooms = ['1', '2', '3', 'Kids', 'Accessibility'];
 
   constructor(private patientService: PatientService) { }
