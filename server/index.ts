@@ -1,6 +1,6 @@
 //* HERE IS THE WEBSOCKET AND MONGOOSE SETUP LIVE (AKA: WHERE THE BACKEND MAGIC HAPPENS)
 // ALPHABETICALLY SORTED WHEREVER POSSIBLE
-// (WS = 'WebSocket'; DB = 'Database')
+// (* = 'more explanation in the README.md'; WS = 'WebSocket'; DB = 'Database')
 
 //? imports - alphabetically sorted by path
 import { PatientModel, PatientInterface } from './database/patient';
@@ -31,46 +31,39 @@ connect(process.env.DB_URL as string, { useNewUrlParser: true, useUnifiedTopolog
     ws.isAlive = true; // set connection as 'alive'
     ws.on('pong', () => ws.isAlive = true); // returns isAlive when triggered
 
-    // now that it's connected, send message...
+    //? what to do when 'message' gets triggered*...
     ws.on('message', (frontendData: string) => {
-      // format data
-      const wsData = JSON.parse(frontendData) as SocketData;
+      const wsData = JSON.parse(frontendData) as SocketData; // formats data
       console.log('🔹 received -> ', frontendData);
-      // trigger appropriate action
-      (triggerAction(wsData) as Promise<any>)
-        // send response to frontend
-        .then(resData => socketRES({ ...wsData, data: resData }));
+
+      (triggerAction(wsData) as Promise<any>) // triggers appropriate action
+        .then(resData => socketRES({ ...wsData, data: resData })); // sends response to frontend
     });
-    // alerts for my peace of mind...
-    // ws.send('🔵 WebSocket Server is on!');
-    console.log('🔵 A new Client has connected');
+
+    console.log('🔵 A new Client has connected'); //* alerts for my peace of mind...
+
+    //? notify in case of errors
     ws.on('error', err => {
       console.warn(`🔴 Client disconnected - reason: ${err}`);
-    })
+    });
   });
-  // -----------
-  PatientModel.watch().on('change', () => {
-    console.log('🟡 DB has been altered');
-  })
-}) // * DEL THIS IF db DOESNT WORK
 
-// set connection is still 'alive' every 5s
-setInterval(() => {
-  wsServer.clients.forEach((ws: WebSocket) => {
-    const extWS = ws as ExtWebSocket;
-    // if connection is dead, terminate the session
-    if (!extWS.isAlive) return ws.terminate();
-    extWS.isAlive = false;
-    ws.ping(null, undefined);
+  //? notifies when DB gets tampered with
+  PatientModel.watch().on('change', () => { //* alerts for my peace of mind...
+    console.log('🟡 DB has been altered');
   });
-}, 5000);
+});
 
 HTTPserver.listen(PORT, () => console.log('🔵 Server has started and runs on port: ' + PORT));
 
+//* AUXILIARY FUNCTIONS
+
+//? sends data as a response to all connected WS clients
 const socketRES = (wsData: SocketData) => wsServer.clients.forEach(client => client.send(JSON.stringify(wsData)));
 
+//? triggers the appropriate DB action according to 'type' attribute*
 const triggerAction = (wsData: SocketData) => {
-  console.log('🟡 event detected-> ', wsData.type);
+  console.log('🟡 event detected-> ', wsData.type); //* alerts for my peace of mind...
   const { data, type: eventType } = wsData;
   switch (eventType) {
     case 'add-patient':
@@ -94,5 +87,19 @@ const triggerAction = (wsData: SocketData) => {
     default:
       console.error(`Unknown Event Type: ${eventType}`);
       break;
-  }
-}
+  };
+};
+
+//? check connection is still 'alive' every 5s
+const wsConnectionCheck = (wsServer: WebSocket.Server) => {
+  setInterval(() => {
+    wsServer.clients.forEach((ws: WebSocket) => {
+      const extWS = ws as ExtWebSocket;
+      if (!extWS.isAlive) return ws.terminate(); // if connection is dead, terminate the session
+      extWS.isAlive = false;
+      ws.ping(null, undefined);
+    });
+  }, 5000);
+};
+
+wsConnectionCheck(wsServer);
