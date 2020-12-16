@@ -1,24 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PatientService } from 'src/app/services/patient.service';
 
 @Component({
   selector: 'app-staff-actions',
-  templateUrl: './staff-actions.component.html',
-  styleUrls: ['./staff-actions.component.css']
+  templateUrl: './staff-actions.component.html'
 })
-export class StaffActionsComponent implements OnInit {
+export class StaffActionsComponent {
+  //? properties
   @Input() patientsExist: boolean;
-  messageAllCounter = 0;
+
   constructor(private patientService: PatientService,) { }
 
-  ngOnInit(): void {
-  }
-  setMsgPatient(): void {
-    this.messageAllCounter++;
-    this.patientService.setMsgPatient(undefined);
-  }
+  //? removes  all messages from every patient
   removeAllMessages(): void {
-    this.messageAllCounter--;
     this.patientService.send2AllPatients('', 'undo-message-all-patients');
-  }
+  };
+
+  //? sets the message target as 'All Patients'
+  setMsgPatient(): void {
+    this.patientService.setMsgPatient(undefined);
+  };
 }

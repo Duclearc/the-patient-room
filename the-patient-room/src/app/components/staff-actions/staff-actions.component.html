@@ -1,14 +1,21 @@
   <div class="staff-actions">
+
     <a routerLink="./add-patient">
       <button>➕🤧 NEW PATIENT</button>
     </a>
+
     <a *ngIf="patientsExist" routerLink="./message-patient">
       <button (click)="setMsgPatient()">💬👨‍👩‍👧‍👦 MESSAGE ALL PATIENTS</button>
     </a>
-    <button *ngIf="messageAllCounter" (click)="removeAllMessages()">💬❌ REMOVE ALL MESSAGES</button>
+
+    <button *ngIf="patientsExist" (click)="removeAllMessages()">💬❌ REMOVE ALL MESSAGES</button>
+
     <a routerLink="./">
       <button>BACK</button>
     </a>
+
+    <!-- 'ADD PATIENT' AND 'SEND MESSAGE' FORMS APPEAR HERE -->
     <router-outlet></router-outlet>
+
   </div>
 
