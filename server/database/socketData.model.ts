@@ -7,7 +7,7 @@ import * as WebSocket from 'ws';
 //? created to test WebSocket connection
 export interface ExtWebSocket extends WebSocket {
     isAlive: boolean;
-}
+};
 
 //? created to avoid typos and bad data-formatting
 export interface SocketData {
@@ -25,4 +25,4 @@ export interface SocketData {
     PatientInterface[] |
     PatientInterface['id'] |
     PatientInterface['message'];
-}
+};

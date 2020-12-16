@@ -9,9 +9,7 @@ export function addPatient(patientData: PatientInterface) {
 }
 //? updates a single patient from db
 export function editPatient(editedPatient: PatientInterface) {
-    const updatedPatient = new PatientModel(editedPatient)
-    console.log(updatedPatient, '🔴');
-    console.log(editedPatient, typeof editedPatient, '🔴')
+    const updatedPatient = new PatientModel(editedPatient);
     return PatientModel.updateOne({ id: editedPatient.id }, updatedPatient);
 }
 //? returns all patients stored in db
@@ -20,8 +18,6 @@ export function getPatients() {
 }
 //? updates the 'message' attribute of all patients in db
 export function messageAllPatients(msg: PatientInterface['message']) {
-    console.log('HERE', '🔴');
-    console.log(msg, typeof msg, '🔴')
     return PatientModel.updateMany({}, { $set: { message: msg } });
 }
 //? removes single patient from db
