@@ -5,33 +5,31 @@
 //? imports - alphabetically sorted by path
 import { PatientModel, PatientInterface } from './database/patient';
 import * as patientActions from './database/patient.actions';
-import { SocketData } from './database/socketData.model';
+import { ExtWebSocket, SocketData } from './database/socketData.model';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
 import { createServer } from 'http';
 import { connect } from 'mongoose';
 import * as WebSocket from 'ws';
 
-dotenv.config();
-const PORT = process.env.PORT || 1234;
-const app = express();
-const HTTPserver = createServer(app);
-const wsServer = new WebSocket.Server({ server: HTTPserver });
-app.use(express.json());
+//? setup
+dotenv.config(); // allows access to dotenv files
+const app = express(); // sets up express app
+const PORT = process.env.PORT || 1234; // specifies port
+const HTTPserver = createServer(app); // creates http basic server
+const wsServer = new WebSocket.Server({ server: HTTPserver }); // creates basic WS server based on HTTPserver
+app.use(express.json()); // express app handles JSON data
 
-interface ExtWebSocket extends WebSocket {
-  isAlive: boolean;
-}
-// ------------
+//? connects to DB
 connect(process.env.DB_URL as string, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
   if (err) throw err;
   console.log('🔵 Database Connected!');
 
-  // ------------
+  //? connects to WS
   wsServer.on('connection', (ws: ExtWebSocket) => {
-    // set connection as 'alive'
-    ws.isAlive = true;
-    ws.on('pong', () => ws.isAlive = true);
+    // setup for connection check
+    ws.isAlive = true; // set connection as 'alive'
+    ws.on('pong', () => ws.isAlive = true); // returns isAlive when triggered
 
     // now that it's connected, send message...
     ws.on('message', (frontendData: string) => {
