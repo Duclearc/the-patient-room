@@ -9,7 +9,7 @@ export class StaffActionsComponent {
   //? properties
   @Input() patientsExist: boolean;
 
-  constructor(private patientService: PatientService,) { }
+  constructor(private patientService: PatientService) { }
 
   //? removes  all messages from every patient
   removeAllMessages(): void {

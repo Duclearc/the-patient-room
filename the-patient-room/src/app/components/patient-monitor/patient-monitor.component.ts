@@ -14,36 +14,34 @@ export class PatientMonitorComponent {
   room: string;
   rooms = ['1', '2', '3', 'Kids', 'Accessibility'];
 
-  constructor(
-    private patientService: PatientService,
-  ) { }
+  constructor(private patientService: PatientService) { }
 
   //? sets patient as 'in session'
-  callPatient(patientID: number, room = this.room): void {
+  callPatient(patientID: Patient['id'], room = this.room): void {
     if (!this.room) return; // prevents calls from proceeding unless a room has been specified
     this.patientService.callPatient(patientID, room);
     this.room = ''; // resets room after a patient has been called
   };
 
   //? sets patient as 'out of session'
-  endSession(patientID: number): void {
+  endSession(patientID: Patient['id']): void {
     this.patientService.endSession(patientID);
   };
 
   //? removes message associatesd with a patient
-  removeMsg(patientID: number): void {
+  removeMsg(patientID: Patient['id']): void {
     this.patientService.setMsgPatient(patientID); // targets the patient to erase message
     this.patientService.sendMsg2Patient('', 'undo-message-patient'); // triggers message reset
     this.patientService.setMsgPatient(undefined); // removes target patient
   };
 
   //? removes patient from list
-  removePatient(patientID: number): void {
+  removePatient(patientID: Patient['id']): void {
     this.patientService.removePatient(patientID);
   };
 
   //? sets the target patient to receive the message
-  setMsgPatient(patientID: number): void {
+  setMsgPatient(patientID: Patient['id']): void {
     this.patientService.setMsgPatient(patientID);
   };
 
