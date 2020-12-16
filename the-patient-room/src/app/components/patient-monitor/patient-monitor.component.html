@@ -6,7 +6,6 @@
     *ngFor="let patient of patients"
   >
     <p>NAME: {{ patient.firstname }} {{ patient.lastname }}</p>
-    <!-- <p>WAITING-TIME: {{ patient.last_visit }}</p> -->
     <p class="patient-info" [class]="patient.room ? 'c-accent' : 'disappear'">
       {{ patient.room ? "🚪: " + patient.room : "" }}
     </p>

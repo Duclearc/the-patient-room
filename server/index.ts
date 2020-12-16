@@ -1,17 +1,23 @@
+//* HERE IS THE WEBSOCKET AND MONGOOSE SETUP LIVE (AKA: WHERE THE BACKEND MAGIC HAPPENS)
+// ALPHABETICALLY SORTED WHEREVER POSSIBLE
+// (WS = 'WebSocket'; DB = 'Database')
+
+//? imports - alphabetically sorted by path
+import { PatientModel, PatientInterface } from './database/patient';
+import * as patientActions from './database/patient.actions';
+import { SocketData } from './database/socketData.model';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
 import { createServer } from 'http';
+import { connect } from 'mongoose';
 import * as WebSocket from 'ws';
-import { connect, Query } from 'mongoose';
-import { PatientModel, PatientInterface } from './database/patient';
-import { SocketData } from './database/socketData.model';
-import * as patientActions from './database/patient.actions';
+
 dotenv.config();
 const PORT = process.env.PORT || 1234;
 const app = express();
 const HTTPserver = createServer(app);
 const wsServer = new WebSocket.Server({ server: HTTPserver });
-app.use(express.json()); //❌
+app.use(express.json());
 
 interface ExtWebSocket extends WebSocket {
   isAlive: boolean;

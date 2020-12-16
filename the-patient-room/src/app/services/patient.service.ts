@@ -131,9 +131,9 @@ export class PatientService {
       msg,
       eventType
     );
-    this.updatePatients(50);
+    this.updatePatients();
   }
-  updatePatients(time = 10) {
-    setTimeout(() => this.getPatients(), time);
+  updatePatients() {
+    setTimeout(() => this.getPatients(), 50);
   }
 }
