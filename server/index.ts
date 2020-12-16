@@ -68,9 +68,27 @@ const socketRES = (wsData: SocketData) => wsServer.clients.forEach(client => cli
 const triggerAction = (wsData: SocketData) => {
   console.log('🟡 event detected-> ', wsData.type);
   const { data, type: eventType } = wsData;
-  if (eventType == 'add-patient') return patientActions.addPatient(data as PatientInterface);
-  if (eventType == 'get-patients') return patientActions.getPatients();
-  if (eventType == 'remove-patient') return patientActions.removePatient(data as PatientInterface['id']);
-  if (eventType == 'message-all-patients' || 'undo-message-all-patients') return patientActions.messageAllPatients(data as PatientInterface['message']);
-  if (eventType == 'message-patient' || 'undo-message-patient' || 'set-patient-in-session' || 'set-patient-out-session') return patientActions.editPatient(data as PatientInterface);
+  switch (eventType) {
+    case 'add-patient':
+      return patientActions.addPatient(data as PatientInterface);
+    case 'get-patients':
+      return patientActions.getPatients();
+    case 'remove-patient':
+      return patientActions.removePatient(data as PatientInterface['id']);
+    case 'message-all-patients':
+      return patientActions.messageAllPatients(data as PatientInterface['message']);
+    case 'undo-message-all-patients':
+      return patientActions.messageAllPatients(data as PatientInterface['message']);
+    case 'message-patient':
+      return patientActions.editPatient(data as PatientInterface);
+    case 'undo-message-patient':
+      return patientActions.editPatient(data as PatientInterface);
+    case 'set-patient-in-session':
+      return patientActions.editPatient(data as PatientInterface);
+    case 'set-patient-out-session':
+      return patientActions.editPatient(data as PatientInterface);
+    default:
+      console.error(`Unknown Event Type: ${eventType}`);
+      break;
+  }
 }
