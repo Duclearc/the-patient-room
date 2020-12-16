@@ -88,6 +88,15 @@ button:active {
 button:disabled {
   opacity: 0.2;
 }
+button:hover,
+button:enabled,
+select {
+  cursor: pointer;
+}
+h1,
+h3 {
+  cursor: default;
+}
 input {
   color: inherit;
 }
@@ -202,4 +211,3 @@ options {
     max-height: 100%;
   }
 }
-

@@ -1,11 +1,19 @@
 <div class="card" id="patient-monitor">
-  <app-staff-actions *ngIf="staff" [patientsExist]="patients.length > 0"></app-staff-actions>
+  <!-- STAFF MAIN ACTIONS -->
+  <app-staff-actions
+    *ngIf="staff"
+    [patientsExist]="patients.length > 0"
+  ></app-staff-actions>
+
+  <!-- PATIENT INFO CARD -->
   <div
     class="card"
     [class]="patient.in_session ? 'c-accent' : 'c-normal'"
     *ngFor="let patient of patients"
   >
     <p>NAME: {{ patient.firstname }} {{ patient.lastname }}</p>
+
+    <!-- PATIENT INFO - ROOM + MESSAGES -->
     <p class="patient-info" [class]="patient.room ? 'c-accent' : 'disappear'">
       {{ patient.room ? "🚪: " + patient.room : "" }}
     </p>
@@ -16,8 +24,13 @@
       {{ patient.message ? "💬: " + patient.message : "" }}
     </p>
 
+    <!-- STAFF BUTTONS IN PATIENT CARD -->
     <div *ngIf="staff">
-      <button *ngIf="!patient.in_session" class="c-accent dropbtn" (click)="callPatient(patient.id)">
+      <button
+        *ngIf="!patient.in_session"
+        class="c-accent"
+        (click)="callPatient(patient.id)"
+      >
         🔔 CALL TO ROOM
         <select (change)="setRoom($event)">
           <option value="">( room )</option>
@@ -47,5 +60,6 @@
         ❌💬 REMOVE MESSAGE
       </button>
     </div>
+
   </div>
 </div>

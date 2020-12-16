@@ -11,12 +11,10 @@ import { Patient } from 'src/models/patient.model';
   styleUrls: ['./patient-message-form.component.css']
 })
 export class PatientMessageFormComponent implements OnInit {
+  //? properties
   msgPatient: Patient;
   msgPatientSubs: Subscription;
   patientName: string;
-  msgPatientForm = this.fb.group({
-    message: ['', [Validators.required]]
-  })
 
   constructor(
     private router: Router,
@@ -25,25 +23,33 @@ export class PatientMessageFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    //? gets the target patient to receive the message
     this.msgPatientSubs = this.patientService.getMsgPatient()
       .subscribe((msgP: Patient) => {
         this.msgPatient = msgP;
-
-        if (this.msgPatient) {
+        if (this.msgPatient) { // if individual, target the form to that patient
           this.patientName = `${this.msgPatient.firstname} ${this.msgPatient.lastname}`
-        } else {
+        } else { // else, target message to all patients
           this.patientName = 'All Patients';
         }
-      })
+      });
+
+    window.scrollTo(0, 0); // scrolls to top to ensure best view of form
   }
 
+  //? form fields and validation
+  msgPatientForm = this.fb.group({
+    message: ['', [Validators.required]]
+  });
+
+  //? what occurs when form is submitted
   onSubmit() {
-    if (this.msgPatientForm.invalid) { return; }
-    if (this.msgPatient) {
+    if (this.msgPatientForm.invalid) return; // prevents invalid forms from proceeding
+    if (this.msgPatient) { // if individual, send message to that patient
       this.patientService.sendMsg2Patient(this.msgPatientForm.value.message, 'message-patient');
-    } else {
+    } else { // else, send message to all patients
       this.patientService.send2AllPatients(this.msgPatientForm.value.message, 'message-all-patients');
     }
-    this.router.navigate(['staff-room']);
-  }
+    this.router.navigate(['staff-room']); // navidates away from the form
+  };
 }

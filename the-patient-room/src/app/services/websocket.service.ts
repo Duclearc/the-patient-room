@@ -31,6 +31,6 @@ export class WebsocketService {
 
   private send(data: SocketData): void | Patient[] {
     this.wsServerRequests.push(data);
-    this.socket$.next(data);
+    this.socket$.next(data); // trigger to update patient in DB
   }
 }
