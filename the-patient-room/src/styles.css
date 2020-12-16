@@ -5,6 +5,7 @@ body {
   margin: 0 auto;
   background-color: rgba(249, 249, 249, 1);
 }
+
 /* BASIC FONT */
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -14,7 +15,19 @@ body {
   color: rgba(44, 62, 80, 1);
 }
 
-/* BASIC COLORS -> "c-tone" */
+/* BASIC COLORS COMBOS */
+/* red */
+.c-accent {
+  background-color: rgba(213, 255, 254, 1);
+  border-color: rgba(178, 28, 28, 1);
+  color: rgba(178, 28, 28, 1);
+}
+/* white */
+.c-background {
+  background-color: rgba(213, 255, 254, 1);
+  border-color: rgba(44, 62, 80, 1);
+  color: rgba(44, 62, 80, 1);
+}
 /* shades of blue */
 .c-light {
   background-color: rgba(213, 255, 254, 1);
@@ -36,18 +49,7 @@ body {
   color: rgba(44, 62, 80, 1);
   letter-spacing: 0.15rem;
 }
-/* red */
-.c-accent {
-  background-color: rgba(213, 255, 254, 1);
-  border-color: rgba(178, 28, 28, 1);
-  color: rgba(178, 28, 28, 1);
-}
-/* white */
-.c-background {
-  background-color: rgba(213, 255, 254, 1);
-  border-color: rgba(44, 62, 80, 1);
-  color: rgba(44, 62, 80, 1);
-}
+
 
 /* <a> TAGS */
 a,
@@ -56,23 +58,16 @@ a:visited {
   border: none;
   outline: none;
 }
+a.active,
+a:focus {
+  color: rgba(178, 28, 28, 1);
+}
 a:hover,
 a:active {
   font-weight: bold;
 }
-a:focus,
-a.active {
-  color: rgba(178, 28, 28, 1);
-}
 
-/* .card COMPONENT */
-.card {
-  border-radius: 15px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-  margin: 1rem auto;
-  max-width: 95%;
-  padding: 0.2rem;
-}
+/* <button> TAGS */
 button {
   border-radius: 10px;
   border: 1px solid;
@@ -93,16 +88,17 @@ button:enabled,
 select {
   cursor: pointer;
 }
-h1,
-h3 {
-  cursor: default;
+
+/* .card COMPONENT */
+.card {
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  margin: 1rem auto;
+  max-width: 95%;
+  padding: 0.2rem;
 }
-input {
-  color: inherit;
-}
-label {
-  opacity: 0;
-}
+
+/* .control ITEMS (IN FORMS) */
 .control input {
   width: 80%;
   font-size: 2rem;
@@ -122,37 +118,13 @@ label {
 .control button {
   margin-bottom: 1rem;
 }
+
+/* .disappear CLASS */
 .disappear {
   opacity: 0;
 }
 
-/* Column container */
-#room,
-.row {
-  display: flex;
-  /* flex-wrap: wrap; */
-}
-
-/* Create two unequal columns that sits next to each other */
-/* Sidebar/left column */
-.side {
-  flex: 20%;
-  min-width: 150px;
-  max-width: 200px;
-}
-
-/* Main column */
-.main {
-  flex: 80%;
-}
-
-/* Fake image, just for this example */
-img.logo {
-  width: 100%;
-  padding: 0.5rem 0 1rem;
-  margin: 0 auto;
-}
-
+/* #greetings */
 #greetings {
   display: flex;
   flex-direction: column;
@@ -172,11 +144,36 @@ img.logo {
 #patient-monitor {
   min-height: 100%;
 }
+
+/* <h> TAGS */
+h1,
+h3 {
+  cursor: default;
+}
+
+/* <input> TAGS */
+input {
+  color: inherit;
+}
+
+/* <img> TAGS */
 img {
   max-height: 100px;
 }
-select,
-options {
+img.logo {
+  width: 100%;
+  padding: 0.5rem 0 1rem;
+  margin: 0 auto;
+}
+
+/* <label> TAGS */
+label {
+  opacity: 0;
+}
+
+/* <options> and <select> TAGS */
+options,
+select {
   border: none;
   background-color: inherit;
   font-size: inherit;
@@ -184,6 +181,24 @@ options {
   text-align: center;
   text-transform: uppercase;
 }
+
+/* ROOM LAYOUT */
+/* Create two unequal columns that sits next to each other */
+/*  -> Column container */
+.row {
+  display: flex;
+}
+/*  -> Sidebar/left column(landscape) / header (portrait) */
+.side {
+  flex: 20%;
+  min-width: 150px;
+  max-width: 200px;
+}
+/*  -> Main content column */
+.main {
+  flex: 80%;
+}
+
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media (max-width: 700px) {
   .row {
@@ -204,10 +219,10 @@ options {
     text-transform: none;
     margin: auto;
   }
-  .logo {
-    max-width: 20%;
-  }
   img {
     max-height: 100%;
+  }
+  .logo {
+    max-width: 20%;
   }
 }
