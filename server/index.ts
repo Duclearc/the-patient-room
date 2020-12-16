@@ -1,10 +1,10 @@
 //* HERE IS THE WEBSOCKET AND MONGOOSE SETUP LIVE (AKA: WHERE THE BACKEND MAGIC HAPPENS)
 // ALPHABETICALLY SORTED WHEREVER POSSIBLE
-// (* = 'more explanation in the README.md'; WS = 'WebSocket'; DB = 'Database')
+// (* = 'more explanation in the NOTES.md'; WS = 'WebSocket'; DB = 'Database')
 
 //? imports - alphabetically sorted by path
-import { PatientModel, PatientInterface } from './database/patient';
-import * as patientActions from './database/patient.actions';
+import { socketRES, triggerAction, wsConnectionCheck } from './composables/websocket.actions';
+import { PatientModel } from './database/patient';
 import { ExtWebSocket, SocketData } from './database/socketData.model';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
@@ -37,7 +37,7 @@ connect(process.env.DB_URL as string, { useNewUrlParser: true, useUnifiedTopolog
       console.log('🔹 received -> ', frontendData);
 
       (triggerAction(wsData) as Promise<any>) // triggers appropriate action
-        .then(resData => socketRES({ ...wsData, data: resData })); // sends response to frontend
+        .then(resData => socketRES({ ...wsData, data: resData }, wsServer)); // sends response to frontend
     });
 
     console.log('🔵 A new Client has connected'); //* alerts for my peace of mind...
@@ -56,50 +56,5 @@ connect(process.env.DB_URL as string, { useNewUrlParser: true, useUnifiedTopolog
 
 HTTPserver.listen(PORT, () => console.log('🔵 Server has started and runs on port: ' + PORT));
 
-//* AUXILIARY FUNCTIONS
-
-//? sends data as a response to all connected WS clients
-const socketRES = (wsData: SocketData) => wsServer.clients.forEach(client => client.send(JSON.stringify(wsData)));
-
-//? triggers the appropriate DB action according to 'type' attribute*
-const triggerAction = (wsData: SocketData) => {
-  console.log('🟡 event detected-> ', wsData.type); //* alerts for my peace of mind...
-  const { data, type: eventType } = wsData;
-  switch (eventType) {
-    case 'add-patient':
-      return patientActions.addPatient(data as PatientInterface);
-    case 'get-patients':
-      return patientActions.getPatients();
-    case 'remove-patient':
-      return patientActions.removePatient(data as PatientInterface['id']);
-    case 'message-all-patients':
-      return patientActions.messageAllPatients(data as PatientInterface['message']);
-    case 'undo-message-all-patients':
-      return patientActions.messageAllPatients(data as PatientInterface['message']);
-    case 'message-patient':
-      return patientActions.editPatient(data as PatientInterface);
-    case 'undo-message-patient':
-      return patientActions.editPatient(data as PatientInterface);
-    case 'set-patient-in-session':
-      return patientActions.editPatient(data as PatientInterface);
-    case 'set-patient-out-session':
-      return patientActions.editPatient(data as PatientInterface);
-    default:
-      console.error(`Unknown Event Type: ${eventType}`);
-      break;
-  };
-};
-
 //? check connection is still 'alive' every 5s
-const wsConnectionCheck = (wsServer: WebSocket.Server) => {
-  setInterval(() => {
-    wsServer.clients.forEach((ws: WebSocket) => {
-      const extWS = ws as ExtWebSocket;
-      if (!extWS.isAlive) return ws.terminate(); // if connection is dead, terminate the session
-      extWS.isAlive = false;
-      ws.ping(null, undefined);
-    });
-  }, 5000);
-};
-
 wsConnectionCheck(wsServer);

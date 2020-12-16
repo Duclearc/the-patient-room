@@ -1,7 +1,7 @@
 //* HERE ARE ALL POSSIBLE ACTION WITH THE PATIENTS noSQL TABLE ITEMS
 // SEPARATE FOR BETTER READABILITY - ALPHABETICALLY SORTED
 
-import { PatientModel, PatientInterface } from './patient';
+import { PatientModel, PatientInterface } from '../database/patient';
 
 //? adds patient to db
 export function addPatient(patientData: PatientInterface) {
